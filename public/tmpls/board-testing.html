@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="table table-condensed table-hover">
+    <div ng-repeat="row in vm.theBoard">
+      <button class="btn-lg"
+              ng-repeat="cell in row"
+              ng-disabled="vm.isTaken(cell);"
+              ng-class="cell.value"
+              ng-click="vm.move(cell);">{{ cell.value }}</button>
+    </div>
+    <br/>
+    <p>
+      <span ng-hide="vm.winner || vm.cat">Current Player: {{ currentPlayer }}</span>
+      <span ng-show="vm.winner">Player {{ currentPlayer }} won!</span>
+      <span ng-show="vm.cat">Cat</span>
+    </p>
+  </div>
+</div>
+
+<button ng-click="vm.reset();" class="btn btn-default btn-large">New Game</button>

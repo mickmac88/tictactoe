@@ -1,12 +1,12 @@
 angular.module('bewd.tictactoe.board', []);
 
-angular.module('bewd.tictactoe.board')
-  .controller('BoardCtrl', function() {
+angular.module('bewd.tictactoe.board').
+  controller('BoardCtrl', function() {
     this.makeYourMove = function makeYourMove() {
       this.theBoard[2][2] = 'Y';
     };
-  })
-  .directive('ticTacToeBoard', function() {
+  }).
+  directive('ticTacToeBoard', function() {
     return {
       scope: {
         theBoard: '='

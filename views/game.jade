@@ -4,8 +4,8 @@ html(lang="en" ng-app="bewd.tictactoe.board")
     include ./includes/bower_header.jade
     title Welcome #{username}
   body
-    tic-Tac-Toe-Board(the-Board="[['X', 'O', 'X'], ['O', 'O', 'X'], ['O', 'X', '']]")
-    tic-Tac-Toe-Board(the-Board="[[' ', ' ', ' '], ['O', 'O', 'X'], ['O', 'X', '']]")
+    tic-tac-toe-board(the-board="[['X', 'O', 'X'], ['O', 'O', 'X'], ['O', 'X', '']]")
+    tic-tac-toe-board(the-board="[[' ', ' ', ' '], ['O', 'O', 'X'], ['O', 'X', '']]")
     //- This is from bootstrap, for center-ish-ing
     .container(ng-init="theList = ['David', 'John', 'Lee']; theAnswer = 47 - 5")
       h1 Hi #{username}

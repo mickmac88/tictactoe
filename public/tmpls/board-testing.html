@@ -9,9 +9,9 @@
     </div>
     <br/>
     <p>
-      <span ng-hide="vm.winner || vm.cat">Current Player: {{ currentPlayer }}</span>
-      <span ng-show="vm.winner">Player {{ currentPlayer }} won!</span>
-      <span ng-show="vm.cat">Cat</span>
+      <span ng-hide="vm.winner || vm.draw">Current Player: {{ vm.currentPlayer }}</span>
+      <span ng-show="vm.winner">Player {{ vm.currentPlayer }} won!</span>
+      <span ng-show="vm.draw">Draw</span>
     </p>
   </div>
 </div>

@@ -1,30 +1,31 @@
 angular.module('bewd.tictactoe.board', []);
 
 angular.module('bewd.tictactoe.board')
-  .controller('BoardCtrl', function($scope) {
+  .controller('BoardCtrl', function() {
 
-    var emptyCell = '?';
+    var emptyCell = '\u00A0\u00A0';
+    var vm = this;
 
-    this.theBoard = [
+    vm.theBoard = [
       [ { value: emptyCell }, { value: emptyCell }, { value: emptyCell } ],
       [ { value: emptyCell }, { value: emptyCell }, { value: emptyCell } ],
       [ { value: emptyCell }, { value: emptyCell }, { value: emptyCell } ]
     ];
 
-    this.reset = function() {
-      _.each(this.theBoard, function(row) {
+    vm.reset = function() {
+      _.each(vm.theBoard, function(row) {
         _.each(row, function(cell) {
           cell.value = emptyCell;
         });
       });
-      this.currentPlayer = 'X';
-      this.winner = false;
-      this.cat = false;
+      vm.currentPlayer = 'X';
+      vm.winner = false;
+      vm.draw = false;
     };
 
-    this.reset();
+    vm.reset();
 
-    this.isTaken = function(cell) {
+    vm.isTaken = function(cell) {
       return cell.value !== emptyCell;
     };
 
@@ -36,34 +37,34 @@ angular.module('bewd.tictactoe.board')
 
     var checkForEndOfGame = function() {
       var rowMatch = _.reduce([0, 1, 2], function(memo, row) {
-        return memo || checkForMatch(this.theBoard[row][0], this.theBoard[row][1],
-        this.theBoard[row][2]);
+        return memo || checkForMatch(vm.theBoard[row][0], vm.theBoard[row][1],
+        vm.theBoard[row][2]);
       }, false);
 
       var columnMatch = _.reduce([0, 1, 2], function(memo, col) {
-        return memo || checkForMatch(this.theBoard[0][col], this.theBoard[1][col],
-        this.theBoard[2][col]);
+        return memo || checkForMatch(vm.theBoard[0][col], vm.theBoard[1][col],
+        vm.theBoard[2][col]);
       }, false);
 
-      var diagonalMatch = checkForMatch(this.theBoard[0][0], this.theBoard[1][1],
-      this.theBoard[2][2]) ||
-                          checkForMatch(this.theBoard[0][2], this.theBoard[1][1],
-                          this.theBoard[2][0]);
+      var diagonalMatch = checkForMatch(vm.theBoard[0][0], vm.theBoard[1][1],
+      vm.theBoard[2][2]) ||
+                          checkForMatch(vm.theBoard[0][2], vm.theBoard[1][1],
+                          vm.theBoard[2][0]);
 
-      this.winner = rowMatch || columnMatch || diagonalMatch;
-      if (!this.winner) {
-        this.cat = _.reduce(_.flatten(this.theBoard), function(memo, cell) {
+      vm.winner = rowMatch || columnMatch || diagonalMatch;
+      if (!vm.winner) {
+        vm.draw = _.reduce(_.flatten(vm.theBoard), function(memo, cell) {
           return memo && cell.value !== emptyCell;
         }, true);
       }
 
-      return this.winner || this.cat;
+      return vm.winner || vm.draw;
     };
 
-    this.move = function(cell) {
-      cell.value = this.currentPlayer;
+    vm.move = function(cell) {
+      cell.value = vm.currentPlayer;
       if (checkForEndOfGame() === false) {
-        this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+        vm.currentPlayer = vm.currentPlayer === 'X' ? 'O' : 'X';
       }
     };
   })

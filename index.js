@@ -17,12 +17,41 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+
+var Sequelize = require('sequelize');
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
+
+var sequelize = new Sequelize(
+  "database",
+  "username",
+  "password", {
+    "dialect": "sqlite",
+    "storage": "./store/session.sqlite"
+  });
+
+var store = new SequelizeStore({ db: sequelize });
+store.sync();
+
+app.use(cookieParser());
+app.use(session({
+  saveUninitialized: false,
+  resave: false,
+  secret: 'I see dead people',
+  store: store
+}));
+
 app.get('/game', function(req, res) {
-  res.render('game', req.query);
+    var playerName = req.session.playerName;
+    res.render('game', { username: playerName });
 });
 
 app.post('/game', function(req, res) {
-  res.redirect('/game?username=' + req.body.username);
+  req.session.playerName = req.body.username;
+  req.session.save(function() {
+    res.redirect('/game');
+  });
 });
 
 app.get('/games', function(req, res) {
@@ -43,8 +72,10 @@ app.post('/games', function(req, res) {
             res.redirect('/games/' + board.id);
         })
         .catch(function(errors) {
-          res.send(JSON.stringify(errors))
+          models.Board.findAll().then(function(boards) {
+              res.render('games', { boards: boards, errors: errors });
         });
+      });
 });
 
 var server = app.listen(3000, function() {

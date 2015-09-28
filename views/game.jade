@@ -5,7 +5,7 @@ html(lang="en" ng-app="bewd.tictactoe.board")
     title Welcome #{username}
   body
     tic-tac-toe-board(the-board="[['X', 'O', 'X'], ['O', 'O', 'X'], ['O', 'X', '']]")
-    tic-tac-toe-board(the-board="[[' ', ' ', ' '], ['O', 'O', 'X'], ['O', 'X', '']]")
+    tic-tac-toe-board(the-board="[['\u00A0', '\u00A0', '\u00A0'], ['O', 'O', 'X'], ['O', 'X', '']]")
     //- This is from bootstrap, for center-ish-ing
     .container(ng-init="theList = ['David', 'John', 'Lee']; theAnswer = 47 - 5")
       h1 Hi #{username}

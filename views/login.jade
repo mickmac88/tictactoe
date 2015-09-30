@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    include ./includes/bower_header.jade
+    title Log In to TicTacToe!
+  body
+    include ./includes/flash.jade
+    .container
+      h1 Log In to TicTacToe!
+    
+      form(name="login", action="/login", method="post")
+        .form-group
+          label Username
+          input.form-control(type="text", name="username")
+        .form-group
+          label Password
+          input.form-control(type="password", name="password")
+        button.btn.btn-default(type="submit") Login!

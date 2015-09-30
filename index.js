@@ -42,6 +42,9 @@ app.use(session({
   store: store
 }));
 
+app.use(session()); // session middleware
+app.use(require('flash')());
+
 app.get('/game', function(req, res) {
     var playerName = req.session.playerName;
     res.render('game', { username: playerName });
@@ -76,6 +79,77 @@ app.post('/games', function(req, res) {
               res.render('games', { boards: boards, errors: errors });
         });
       });
+});
+
+// user registration
+app.get('/register', function(req, res) {
+  res.render('register');
+});
+
+app.post('/register', function(req, res) {
+  // Does the user exist already?
+  models.User.find({ where: { username: req.body.username }})
+    .then(function(user) {
+        if (user) {
+          req.flash('warning', "Username already exists");
+          req.session.save(function() {
+            res.redirect('/register');
+          });
+        } else {
+          models.User.create(req.body)
+            .then(function(newUser) {
+              req.session.user_id = newUser.id;
+              req.session.save(function() {
+                res.redirect('/games');
+              });
+          });
+        }
+    });
+});
+
+// User login
+app.get('/login', function(req, res) {
+  res.render('login');
+});
+
+app.post('/login', function(req, res) {
+  // Is the user already logged in?
+  models.User.find({ where: { username: req.body.username }})
+    .then(function(user) {
+        if (user) {
+          req.flash('warning', "User is already logged in");
+          req.session.save(function() {
+            res.redirect('/games');
+          });
+        } else {
+          models.User.find({ where: { password: req.body.password }})
+            .then(function(User) {
+              if (user) {
+                models.User.findById(req.params.user_id)
+                  .then(function() {
+                    res.redirect('/games');
+                  });
+                } else {
+                    req.flash('warning', "Username or Password is Incorrect");
+                    req.session.save(function() {
+                      res.redirect('/login');
+                    });
+                  };
+              });
+        };
+    });
+});
+
+app.get('/users', function(req, res) {
+    models.User.findAll().then(function(users) {
+        res.render('users', { users: users });
+    });
+});
+
+app.get('/users/:user_id', function(req, res) {
+    models.User.findById(req.params.user_id).then(function(user) {
+        res.render('individualUser', { user: user });
+    });
 });
 
 var server = app.listen(3000, function() {

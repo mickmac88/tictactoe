@@ -5,6 +5,7 @@ var user = require('../models').User;
 
 // User login
 app.get('/', function(req, res) {
+  // Is the user already logged in?
   if (req.currentUser) {
     req.flash('info', "You logged in already!");
     req.session.save(function() {
@@ -16,7 +17,6 @@ app.get('/', function(req, res) {
 });
 
 app.post('/', function(req, res) {
-  // Is the user already logged in?
   user.find({ where: { username: req.body.username }})
     .then(function(user) {
         if (user) {

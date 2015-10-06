@@ -27,16 +27,8 @@ app.use('/login', require('./routes/login'));
 
 app.use('/register', require('./routes/register'));
 
-app.get('/users', function(req, res) {
-    models.User.findAll().then(function(users) {
-        res.render('users', { users: users });
-    });
-});
+app.use('/users', require('./routes/users'));
 
-app.get('/users/:user_id', function(req, res) {
-    models.User.findById(req.params.user_id).then(function(user) {
-        res.render('individualUser', { user: user });
-    });
-});
+app.use('/logout', require('./routes/logout'));
 
 module.exports = app;

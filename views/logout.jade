@@ -1,0 +1,10 @@
+extends ./layout.jade
+
+block title
+  title Log Out of TicTacToe!
+
+block content
+  h1 Log Out of TicTacToe!
+  
+  form(name="logout", action="/logout", method="post")
+    button.btn.btn-default(type="submit") Log Out!

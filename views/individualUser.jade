@@ -1,8 +1,9 @@
 doctype html
-html
+html(lang="en" ng-app="bewd.tictactoe.user")
   head
     include ./includes/bower_header.jade
     title User ##{user.id}
   body
     .container
-      h1 User ##{user.id}      
+      h1 User ##{user.id}
+      user-info(the-user="#{JSON.stringify(user.user)}")

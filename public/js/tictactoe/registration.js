@@ -17,7 +17,7 @@
                 method: 'GET',
                 params: { username: modelValue}
               }).then(function(response) {
-                response.data ? reject() : resolve();
+                response.data ? resolve() : reject();
               });
             });
             // return  existingUsernames.indexOf(modelValue) === -1;

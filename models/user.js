@@ -9,7 +9,8 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+        User.hasMany(models.Board, { as: 'XPlayer', foreignKey: 'xPlayerId' });
+        User.hasMany(models.Board, { as: 'OPlayer', foreignKey: 'oPlayerId' });
       },
       doesUsernameExist: function(username) {
         return sequelize.query("SELECT 1 from 'users' where username = ?",

@@ -3,10 +3,15 @@ doctype html
 html(ng-app="bewd.tictactoe")
   head
     include ./includes/bower_header.jade
+    include ./mixins/forLoggedInUser.jade
     block title
       title Tic Tac Toe Time!
 
   body
     include ./includes/flash.jade
+    +forLoggedInUser
+     .container
+       .alert.alert-info
+         p You are currently logged in as #{currentUser.username}
     .container
        block content

@@ -7,7 +7,7 @@ var user = require('../models').User;
 app.get('/', function(req, res) {
   // Is the user already logged in?
   if (req.currentUser) {
-    req.flash('info', "You logged in already!");
+    req.flash('info', 'You logged in already as ' + req.currentUser.username + '!');
     req.session.save(function() {
       res.redirect('/games');
     });

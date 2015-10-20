@@ -1,7 +1,10 @@
 angular.module('bewd.tictactoe.user', []);
 
 angular.module('bewd.tictactoe.user')
-  .directive('UserInfo', function() {
+  .controller('UserInfo', function() {
+    this.theUser = {};
+  })
+  .directive('showUserInfo', function() {
     return {
       scope: {
         theUser: '='

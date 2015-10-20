@@ -1,14 +1,13 @@
-doctype html
-html
-  head
-    include ./includes/bower_header.jade
-    title All the users!
-  body
-    .container
-      h1 All the users!
-      ul
-        each user in users
-          li
-            a(href="/users/#{user.id}") User ##{user.id}
-      if errors
-        p.text-danger= errors.message
+extends ./layout.jade
+
+block title
+  title All the users!
+  
+block content
+  h1 All the users!
+  ul
+    each user in users
+      li
+        a(href="/users/#{user.id}") User ##{user.id}: #{user.username}
+  if errors
+    p.text-danger= errors.message

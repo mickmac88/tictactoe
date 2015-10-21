@@ -1,16 +1,7 @@
 var express = require('express');
 var app = express.Router();
 
-var board = require('../models').Board;
-
-var accepts = {
-  'json': 'application/json',
-  'html': 'text/html'
-};
-app.param('format', function(req, res, next, param) {
-  req.headers.accept = accepts[param];
-  next();
-});
+var board = require('../models').board;
 
 app.param('game_id', function(req, res, next) {
   board.findById(req.params.game_id).then(function(b) {
@@ -21,6 +12,15 @@ app.param('game_id', function(req, res, next) {
       res.status(404).send('Game not found.');
     }
   });
+});
+
+var accepts = {
+  'json': 'application/json',
+  'html': 'text/html'
+};
+app.param('format', function(req, res, next, param) {
+  req.headers.accept = accepts[param];
+  next();
 });
 
 app.get('/.:format?', function(req, res) {
@@ -82,6 +82,19 @@ app.post('/:game_id', function(req, res) {
       }
     })
   })
+  .catch(function(error) {
+    res.format({
+      html: function() {
+        res.flash('error', error.message);
+        req.session.save(function() {
+          res.redirect('/games/' + req.board.id);
+        });
+      },
+      json: function() {
+        res.json(error);
+      }
+    });
+  });
 });
 
 app.post('/:game_id/', function(req, res) {

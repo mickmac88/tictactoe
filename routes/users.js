@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var User = require('../models').User;
+var User = require('../models').user;
 
 router.param('user_id', function(req, res, next) {
   User.findById(req.params.user_id).then(function(u) {

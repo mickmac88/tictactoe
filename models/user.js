@@ -19,6 +19,31 @@ module.exports = function(sequelize, DataTypes) {
             return !userExists;
         });
       }
+    },
+    instanceMethods: {
+      getBoards: function() {
+        return sequelize.Promise.all([
+          (this.XPlayer || this.getXPlayer()),
+          (this.OPlayer || this.getOPlayer())
+        ]).then(function(boards) {
+          return boards.reduce(function(a, b) { return a.concat(b); }, []);
+        })
+      }
+    },
+    scopes: {
+      knownValues: {
+        where: {
+          id: 1
+        }
+      },
+      withBoards: function() {
+        return {
+          include: [
+            { association: User.associations.XPlayer },
+            { association: User.associations.OPlayer }
+          ]
+        }
+      }
     }
   });
   return User;

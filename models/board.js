@@ -6,7 +6,9 @@ module.exports = function(sequelize, DataTypes) {
         get: function() {
             // Just trust me on this
             // This will split the string into groups of three
-            return this.getDataValue('board').match(/.{3}/g).map(function(row) {
+            return this.getDataValue('board')
+            .match(/.{3}/g)
+            .map(function(row) {
                 return row.split('');
             });
         },

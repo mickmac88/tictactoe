@@ -19,6 +19,7 @@
     "eslint": "^1.4.3",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
+    "flash": "^1.1.0",
     "jade": "^1.11.0",
     "pg": "^4.4.3",
     "pg-hstore": "^2.3.2",

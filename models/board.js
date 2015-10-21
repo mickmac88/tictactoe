@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = function(sequelize, DataTypes) {
   var Board = sequelize.define('board', {
     board: {
@@ -19,13 +20,13 @@ module.exports = function(sequelize, DataTypes) {
               msg: 'Must be a valid tic tac toe board'
             }
         }
-      },
+      }
     },
-        {
+    {
     classMethods: {
       associate: function(models) {
-        Board.belongsTo(models.User, { as: 'XPlayer', foreignKey: 'xPlayerId' });
-        Board.belongsTo(models.User, { as: 'OPlayer', foreignKey: 'oPlayerId' });
+        Board.belongsTo(models.user, { as: 'XPlayer', foreignKey: 'xPlayerId' });
+        Board.belongsTo(models.user, { as: 'OPlayer', foreignKey: 'oPlayerId' });
       }
     },
     instanceMethods: {

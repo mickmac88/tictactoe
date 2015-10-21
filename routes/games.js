@@ -109,6 +109,7 @@ app.post('/:game_id/join', function(req, res) {
     res.flash('warning', 'You need to be logged in to join a game');
     res.redirect('/games/' + req.board.id);
   } else {
+    console.log('Adding user ' + req.currentUser.username + ' to game #' + req.board.id);
     if (req.body.asX) {
       req.board.setXPlayer(req.currentUser).then(function() {
         // res.format({
@@ -130,7 +131,7 @@ app.post('/:game_id/join', function(req, res) {
         //     res.json(board);
         //   }
         // });
-      })
+      });
     }
   }
 });

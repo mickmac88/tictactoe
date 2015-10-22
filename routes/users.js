@@ -25,4 +25,8 @@ router.get('/:user_id', function(req, res) {
   res.render('individualUser');
 });
 
+router.get('/verify', function(req, res) {
+  // something here
+});
+
 module.exports = router;

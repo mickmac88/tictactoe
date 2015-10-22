@@ -7,10 +7,12 @@ app.use(function(req, res, next) {
   };
   if (req.session.user_id) {
     models.user.findById(req.session.user_id).then(function(user) {
-      console.log("User logged in as " + user.username);
-      req.currentUser = res.locals.currentUser = user;
+      if (user) {
+        console.log("User logged in as " + user.username);
+        req.currentUser = res.locals.currentUser = user;
+      }
       next();
-    })
+    });
   } else {
     next();
   }

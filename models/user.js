@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     last_name: DataTypes.STRING,
     username: DataTypes.STRING,
     password: DataTypes.STRING,
-    email: DataTypes.STRING
+    email: DataTypes.STRING,
+    emailKey: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
@@ -18,6 +19,9 @@ module.exports = function(sequelize, DataTypes) {
           .spread(function(userExists) {
             return !userExists;
         });
+      },
+      findByEmailKey: function() {
+        return User.find({ emailKey: key });
       }
     },
     instanceMethods: {
@@ -28,6 +32,12 @@ module.exports = function(sequelize, DataTypes) {
         ]).then(function(boards) {
           return boards.reduce(function(a, b) { return a.concat(b); }, []);
         })
+      },
+      isEmailVerified: function() {
+        return !this.emailKey;
+      },
+      markVerified: function() {
+        return this.update({ emailKey: null });
       }
     },
     scopes: {
@@ -44,6 +54,16 @@ module.exports = function(sequelize, DataTypes) {
           ]
         }
       }
+    },
+    hooks: {
+      beforeCreate: function(user) {
+        user.emailKey = require('crypto').randomBytes(32).toString('hex');
+      },
+      afterCreate: [
+        function(user) {
+          require('../emails').sendUserVerificationEmail(user);
+        }
+      ]
     }
   });
   return User;

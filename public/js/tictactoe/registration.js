@@ -3,6 +3,7 @@
     .directive('uniqueUsername', function($http, $q) {
       return {
         require: 'ngModel',
+        restrict: 'A',
         link: function(scope, element, attrs, ctrl) {
           // Unique-username="raynes,jamesBond007"
           // var existingUsernames = attrs.uniqueUsername.split(',');

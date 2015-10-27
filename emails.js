@@ -35,6 +35,10 @@ var txResponseHandler = function txResponseHandler(err, data) {
 client.transmissions.send(txObject, txResponseHandler);
 }
 
+function sendReminderEmails(boards) {
+  // do stuff
+}
+
 module.exports = {
   sendUserVerificationEmail: sendUserVerificationEmail
 };

@@ -82,9 +82,12 @@ angular.module('bewd.tictactoe.board').
 }
 
 angular.module('bewd.tictactoe.board')
-.controller('BoardController', function(boardService, $routeParams) {
-  var vm = this;
-  boardService.getBoard($routeParams.id).then(function(board) {
-    vm.theBoard = board.board;
-  });
+// .controller('BoardController', function(boardService, $routeParams) {
+//   var vm = this;
+//   boardService.getBoard($routeParams.id).then(function(board) {
+//     vm.theBoard = board.board;
+//   })
+// });
+  .controller('BoardController', function(boardObj) {
+    this.theBoard = boardObj.board;
 });

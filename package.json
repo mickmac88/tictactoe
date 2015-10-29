@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angular-mocks": "^1.4.7",
     "body-parser": "^1.14.0",
     "bower": "^1.5.2",
     "connect-redis": "^3.0.1",
@@ -31,7 +32,18 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "chai": "^3.4.0",
     "gulp": "^3.9.0",
-    "gulp-live-server": "0.0.28"
+    "gulp-live-server": "0.0.28",
+    "karma": "^0.13.14",
+    "karma-chai": "^0.1.0",
+    "karma-coverage": "^0.5.3",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-mocha": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-safari-launcher": "^0.1.1",
+    "mocha": "^2.3.3",
+    "phantomjs": "^1.9.18",
+    "protractor": "^2.5.1"
   }
 }

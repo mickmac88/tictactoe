@@ -61,7 +61,7 @@ module.exports = function(sequelize, DataTypes) {
       },
       afterCreate: [
         function(user) {
-          require('../emails').sendUserVerificationEmail(user);
+          // require('../emails').sendUserVerificationEmail(user);
         }
       ]
     }

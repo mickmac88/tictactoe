@@ -12,7 +12,7 @@ block content
     if title
       | All the games!
     else 
-      = title
+      = title  
   p Existing boards
   ul
     each board in boards
@@ -24,11 +24,11 @@ block content
     ul
       li(ng-repeat="board in boards.boards track by board.id")
         a(ng-click="boards.selectBoard(board)") Game {{ '#' + board.id }}
-    
+  
     div(ng-show="boards.selectedBoard")
       p Game {{ '#' + boards.selectedBoard.id }}
       tic-tac-toe-board(the-board="boards.selectedBoard.board")
-      
+
   if errors
     p.text-danger= errors.message
   form(name="newGame" method="post" action="/games")

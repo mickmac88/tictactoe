@@ -5,12 +5,4 @@ block title
 
 block content
   h1 Log In to TicTacToe!
-  
-  form(name="login", action="/login", method="post")
-    .form-group
-      label Username
-      input.form-control(type="text", name="username")
-    .form-group
-      label Password
-      input.form-control(type="password", name="password")
-    button.btn.btn-default(type="submit") Log In!
+  include ./partials/login.jade

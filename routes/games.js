@@ -112,25 +112,19 @@ app.post('/:game_id/join', function(req, res) {
     console.log('Adding user ' + req.currentUser.username + ' to game #' + req.board.id);
     if (req.body.asX) {
       req.board.setXPlayer(req.currentUser).then(function() {
-        // res.format({
-        //   html: function() {
-        //     res.redirect('/games/' + board.id);
-        //   },
-        //   json: function() {
-        //     res.json(board);
-        //   }
-        // })
+        // board.associate.belongsTo(req.currentUser, { as: 'XPlayer', foreignKey: 'xPlayerId' })
+        // // models.user.associate.hasMany(models.board, { as: 'XPlayer', foreignKey: 'xPlayerId' })
+        //   .then(function() {
+        //     res.redirect('/games/' + req.board.id);
+        //   });
       })
     } else {
       req.board.setOPlayer(req.currentUser).then(function() {
-        // res.format({
-        //   html: function() {
-        //     res.redirect('/games/' + board.id);
-        //   },
-        //   json: function() {
-        //     res.json(board);
-        //   }
-        // });
+        // board.associate.belongsTo(req.currentUser, { as: 'OPlayer', foreignKey: 'oPlayerId' })
+        // // models.user.associate.hasMany(models.board, { as: 'OPlayer', foreignKey: 'oPlayerId' })
+        //   .then(function() {
+        //     res.redirect('/games/' + req.board.id);
+        //   });
       });
     }
   }

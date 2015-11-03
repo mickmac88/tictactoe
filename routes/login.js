@@ -19,23 +19,51 @@ app.get('/', function(req, res) {
 app.post('/', function(req, res) {
   user.find({ where: { username: req.body.username }})
     .then(function(user) {
-        if (user) {
-          if (user.password === req.body.password) {
-            req.session.user_id = user.id;
-            req.flash('success', "Logged in!");
-            req.session.save(function() {
-              res.redirect('/games');
-            });
-          } else {
-            req.flash('warning', 'Bad password. Try ' + user.password + ' instead.');
-            res.redirect('/login');
-          }
-        } else {
-          req.flash('warning', "Username Unknown");
-          res.redirect('/login');
+      var warning;
+      if (user) {
+        if (user.password === req.body.password) {
+          req.session.user_id = user.id;
+          req.session.save(function() {
+            res.format({
+              html: function() {
+                req.flash('success', "Logged in!");
+                res.redirect('/games')
+              },
+              json: function() {
+                res.json({ success: true, message: 'Logged In!' });
+              }
+            })
+          });
+        } else { // user.password === req.body.password
+          warning = 'Bad password. Try ' + user.password + ' instead.'
+          res.format({
+            html: function() {
+              req.flash('warning', warning);
+              req.session.save(function() {
+                res.redirect('/login');
+              });
+            },
+            json: function() {
+              res.json({ success: false, errors: [warning]});
+            }
+          })
         }
-      });
-  });
+      } else { // user
+        warning = 'Username unknown';
+        res.format({
+          html: function() {
+            req.flash('warning', warning);
+            req.session.save(function() {
+              res.redirect('/login');
+            });
+          },
+          json: function() {
+            res.status(404).json({ success: false, errors: [warning]})
+          }
+        })
+      }
+    });
+});
 
 //           user.find({ where: { password: req.body.password }})
 //             .then(function(User) {

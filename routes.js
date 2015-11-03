@@ -42,4 +42,8 @@ app.use('/logout', require('./routes/logout'));
 
 app.use('/admin', require('./routes/admin'));
 
+app.get('/partials/:name', function(req, res) {
+  res.render('partials/' + req.params.name);
+});
+
 module.exports = app;

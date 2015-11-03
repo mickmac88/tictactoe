@@ -1,13 +1,25 @@
 (function () {
 
-  angular.module('bewd.tictactoe', ['bewd.tictactoe.board', 'ngMessages', 'bewd.tictactoe.registration', 'bewd.tictactoe.user', 'ngRoute'])
+  angular.module('bewd.tictactoe',
+  ['bewd.tictactoe.board', 'ngMessages', 'bewd.tictactoe.registration', 'bewd.tictactoe.user', 'ngRoute'])
     .config(function($routeProvider) {
+      $routeProvider.when('/login', {
+        templateUrl: '/partials/login',
+        controller: 'LoginController',
+        controllerAs: 'vm',
+        bindToController: true
+      });
       // $routeProvider.when('a/b/c', {
       //   templateUrl: 'a/b/c.html'
       //   controller: 'ABCController'
       //   ...
       // });
       // $routeProvider.when('b/c/d', {});
+      $routeProvider.when('/games', {
+        templateUrl: '/partials/games',
+        controller: 'BoardsController',
+        controllerAs: 'boards'
+      });
       $routeProvider.when('/game/wacky', {
         templateUrl: '/public/tmpls/board.html',
         controller: 'BoardController',
@@ -30,6 +42,31 @@
           }
         }
       });
+    })
+    .run(function($rootScope) {
+      $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        console.log(next);
+      });
+        // if (going_to_login_and_already_logged_in)
+        //   event.preventDefault();
+        //   $location.path('/games');
+        // }
     });
 
+    angular.module('bewd.tictactoe')
+      .controller('LoginController', function($http, $location, $rootScope) {
+        var vm = this;
+        vm.tryToLogin = tryToLogin;
+
+        function tryToLogin() {
+          $http.post('/login', { username: vm.username, password: vm.password })
+            .then(function() {
+              $rootScope.isLoggedIn = true;
+              $location.path('/games');
+            })
+            .catch(function(response) {
+              console.log(response.data.errors);
+            });
+        }
+      });
 })();

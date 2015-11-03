@@ -52,8 +52,8 @@ angular.module('bewd.tictactoe.board').
   }]).
   controller('BoardsController', BoardsController);
 
-  BoardsController.$inject = ['boardService', '$interval', '$log'];
-  function BoardsController(boardService, $interval, $log) {
+  BoardsController.$inject = ['boardService', '$interval', '$log', '$scope'];
+  function BoardsController(boardService, $interval, $log, $scope) {
     var vm = this;
 
     var boardRefresher;
@@ -72,14 +72,17 @@ angular.module('bewd.tictactoe.board').
 
     function loadBoards() {
       boardService.getBoards().then(function(boards) {
-        $log.debug("Boards response is", boards);
+        $log.debug("Boards response is ", boards);
         vm.boards = boards;
       });
     }
 
     loadBoards();
-    $interval(loadBoards, 10000);
-}
+    var boardLoader = $interval(loadBoards, 10000);
+    $scope.$on('$destroy', function() {
+      $interval.cancel(boardLoader);
+    });
+  }
 
 angular.module('bewd.tictactoe.board')
 // .controller('BoardController', function(boardService, $routeParams) {
